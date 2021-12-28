@@ -1,0 +1,136 @@
+$skybluebtn : rgb(66, 133, 244);
+$default_font : 13px;
+@mixin btn {
+    cursor: pointer;
+    padding: 5px 15px;
+    background-color: #eee;
+    box-shadow: 1px 1px 1px 1px #eee;  
+    font-size: 14px;
+}
+.ListStyle{
+    table{
+        width: 100%;
+        background-color: white;
+        border-collapse: collapse;
+        thead{
+            border-top: 1px solid #000;            
+        }
+        th{
+            font-size: 16px;     
+        }
+        th:nth-child(1){
+            width: 15%;
+        }
+        
+        th:nth-child(3){
+            width: 15%;
+        }
+        th:nth-child(4){
+            width: 15%;
+        }
+        th:nth-child(5){
+            width: 10%;
+        }
+        td{
+            font-size: 14px;
+            cursor: pointer;
+        }
+        th,td{       
+            border-bottom: 1px solid #eee;
+            padding: 10px 5px;    
+        }
+        .bbs-comments-count{
+            color : #ff2f3b;
+            margin-left: 5px;
+            font-weight: bold;
+        }
+    }    
+   
+    .selected{
+        font-weight: bold;
+        background-color: #f9f9fa;
+    }
+    .postbtn{
+        text-align: right;
+        margin-top: 10px;
+       span{           
+        @include btn;
+        border : none;
+        color: white;
+        background-color: $skybluebtn;
+       }
+    }
+}
+
+.BoardList{
+    position: relative;
+    input{
+        position: absolute;
+        top:50%;
+        transform: translateY(-50%);        
+    }
+    label{
+        margin-left: 20px;
+        font-size: 14px;
+    }
+    font-size: 12px;
+    .select{
+        position: absolute;
+        padding: 2px;
+        right: 0;
+        bottom: 2px;
+    }    
+}
+.bbs_searchbar{
+    font-size: 14px;
+    text-align: center;
+    margin-top: 30px;
+    background-color: transparent;
+    .paging{        
+        .pre{
+            display: inline;
+            border-right: 2px solid #ebebea ;
+            span{
+                padding: 0px 10px;
+                cursor: pointer;
+            }
+        }
+        .page{
+            display: inline;
+            span{
+                padding: 0px 10px;
+                cursor: pointer;
+            }
+        }
+        .next{
+            display: inline;
+            border-left: 2px solid #ebebea ;
+            span{
+                padding: 0px 10px;
+                cursor: pointer;
+            }
+        }
+        .selectedpage{
+            font-weight: bold;
+            background-color: #eee;
+        }
+    }
+    .list_search{
+        select{
+            padding: 4px 0px;
+            margin-right: 4px;
+            width: 100px;
+        }
+        input{
+            padding: 3px 5px;
+            margin-right: 4px;
+            width: 200px;
+        }
+        button{
+            border : none;
+            color: white;
+            padding: 5px 15px;
+            background-color: $skybluebtn;
+        }
+    }
+}

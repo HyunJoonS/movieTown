@@ -1,0 +1,292 @@
+@mixin navlist {
+    .nev{
+        list-style: none;  
+        font-size: 26px;
+        font-weight: 800;  
+        
+    }
+    .nev .nev-list{    
+        position: relative;
+        color: var(--whitegray);
+        display: inline;
+        margin: 0 40px;
+        transition: all .3s;   
+    }
+    .nev:hover :not(.on){
+        filter: blur(2px);
+    }    
+    .nev .on{
+        color: white;
+        filter: blur(0px);
+    }
+
+
+    .nev-list ul{        
+        position: absolute; 
+        display: flex;   
+        white-space: nowrap;
+        top:20px;
+        left: 0px;
+        list-style: none;
+        font-size: 15px;
+        padding:0;
+        padding-top: 30px;
+        margin: 0;
+    }
+    .nev-list ul li{
+        cursor: pointer;
+        display: block;        
+        margin-right: 25px;
+        filter: blur(0px);
+    }
+    .nev-list ul .on{
+        color: var(--whitegray);
+    }
+    .nev-list ul .on:hover{
+        color: white;
+    }
+}
+
+:root{    
+    --whitegray :rgb(201, 198, 198);
+    --whitegray-light : #fafbfb ;
+    --skyblue : #116DFF;
+
+    --width : 1100px;
+}
+html{
+    min-width: 1100px;
+}
+
+.Home{
+    .movieBox{
+        position: relative;
+        width: 100%;    
+    }
+    .player-wrapper{
+        position: relative;
+        width: 100%;    
+        padding-bottom: 40.5%;
+        overflow: hidden;  
+        min-width: var(--width); 
+        min-height: calc(0.405*var(--width));
+        background-color: black; 
+    }
+    .react-player{
+        position:absolute;
+        left:0;
+        top: 50%;    
+        transform: translateY(-50%);        
+    }
+    .react-player-mask{
+        position:absolute;  
+        background: linear-gradient( to right, black,rgba(255, 255, 255, 0) 10%,rgba(255, 255, 255, 0) 90%,black );
+        width: 100%;
+        height: 100%;
+    }
+
+    .mycontainer{
+        max-width: var(--width);
+    }
+    .contentsBox{
+        position: absolute;    
+        left: 50%;
+        transform: translateX(-50%);    
+    }
+    .inner-head{
+    text-align: center;  
+    margin-top: 1%;
+    width: 100%;
+    }
+
+    @include navlist;
+    .inner-body{    
+        position: absolute;  
+        top: 27%;   
+        width: 100%; 
+        
+        
+    }
+    .inner-body .title{
+        font-size: 50px;
+        font-weight: bold;
+        color: white;
+    }
+    .inner-body .posts{
+        overflow: hidden;
+        text-overflow: ellipsis;
+        word-wrap: break-word;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        
+        width: 428px;
+        height: 69px;
+        font-size: 16px;
+        color: rgba(255, 255, 255, 0.75);   
+    }
+    .preview-btn{
+        display: inline-block;
+        padding: 0px 10px 0px 10px;
+        height: 36px;    
+        background-color: white;
+    }
+    .preview-btn p {
+        line-height: 36px; 
+    }
+
+
+    .inner_bottom{
+        position: absolute;
+        top: 70%;
+        width: 1100px; 
+        overflow: hidden;
+
+    }
+    .-wrapper{
+        overflow: hidden;
+    }
+    .ranking-wrapper{
+        width: 100%;
+        max-width: 1100px;
+        position: absolute;
+        top : 70%;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+    .ranking{
+        display: flex;
+        list-style: none;
+        padding:0;
+        margin-top: 10px;  
+        transition: all .3s;
+        transform: translateX();
+    }
+    .ranking li{    
+        margin-right: 20px;
+        transition: all .3s;   
+    }
+
+    .ranking-content-poster{ 
+        position: relative;   
+        border-radius: 10px;
+        width: 204px;
+        height: 300px;
+        overflow: hidden;
+    }
+    .ranking-content-poster .info{
+        position: absolute;
+        top: 0px;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.788);
+        padding: 25px;
+        transition: all 0.5s;
+        opacity: 0;
+    }
+    .ranking-content-poster .info dl{
+        display: flex;
+        padding:  1px;
+        margin: 0;
+        color:white;
+    }
+    .ranking-content-poster .info p{
+        color: white;
+        font-size: 12px; 
+
+        overflow: hidden;
+        text-overflow: ellipsis;
+        word-wrap: break-word;
+        display: -webkit-box;
+        -webkit-line-clamp: 13;
+        -webkit-box-orient: vertical;
+    }
+    dt{
+        color: wheat;
+    }
+    dd{
+        margin-left: 7px;
+    }
+    .ranking-content-poster:hover .info{
+        opacity: 1;
+    }
+    .ranking-content:hover {
+        transform: translateY(-10px);
+    }
+    .ranking-content-poster img{    
+        width: 100%;    
+        height: 300px;
+    }
+    .ranking-content-poster .number{
+        position:absolute;
+        top:0px;
+        padding: 10px;    
+        color: white;
+        font-size: 30px;
+        font-style: italic;
+        font-family: 'SF-UI-Display-Thin', sans-serif;
+    }
+
+    .ranking-content-poster .point{
+        position:absolute;
+        width: 100%;
+        bottom: 10px;
+        color: white;
+        font-size: 16px;
+        text-align: center;
+        padding: 3px 0px;
+    }
+
+    .blurEffect {
+        -webkit-backdrop-filter: blur(1px);
+        backdrop-filter: blur(1px);
+        background-color: rgba(32, 32, 32, 0.061);
+    }
+    .ranking-content .title h4{
+        font-size: 18px;
+        font-weight: bold;
+        margin-top: 10px;
+        text-align: center;        
+    }
+
+    .slide{
+        width: 40px;
+        height: 40px;
+        background-color: white;
+        border-radius: 30px;
+        position: absolute;
+        top: 142px;
+        font-size: 20px;  
+        text-align: center;
+        line-height: 40px;
+
+    }
+    .slide-left{
+        left: -20px;        
+    }
+    .slide-right{
+        right: -20px;    
+    }
+
+    .volume{
+        width: 40px;
+        height: 40px;
+        line-height: 38px;
+        border-radius: 30px;
+        border:1px solid rgba(255, 255, 255, 0.75);
+        color: white;
+        position: absolute;
+        top: 40%;
+        right: 0;
+        font-size: 20px;  
+        text-align: center;
+    }
+    .volume:hover{
+        background-color: rgba(246, 243, 243, 0.315);;
+    }
+
+    .bottom{
+        width: 100%;
+        margin-top: 250px;
+    }
+}

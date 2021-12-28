@@ -1,0 +1,134 @@
+@mixin Chat-message-after {
+   
+}
+$menucolor : rgb(255, 255, 255);
+.navbar{
+    height: 50px;
+    border-bottom: 1px solid #eee;
+    .wrap{
+      position: relative;
+      width: 1100px;
+      margin: 0 auto;
+    }
+    .logo{
+        display: inline;
+    }
+    .loginBox{
+      position: absolute;
+      right: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      cursor: pointer;
+      border : 1px solid #eee;
+      border-radius: 2px;
+      padding : 2px 5px;
+    }
+    .profileImage{
+        position: absolute;
+        right: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        cursor: pointer;
+        border-radius: 50%;
+        border : 1px solid rgb(200, 200, 200);
+        width: 30px;
+        height: 30px;
+        overflow: hidden;
+        img{
+            width: 30px; 
+            height: 30px;
+            object-fit: cover; 
+        }
+    }
+
+
+    .menu-bg{
+        position: fixed;
+        top:0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        z-index: 9998;
+    }
+    .menuWrap{
+        position: absolute;
+        right: -10px;
+        top: 161px;
+    }
+    .menu{
+        width: 250px;
+        height: 255px;
+        position: relative;
+        background-color: $menucolor;
+        border-radius: 10px;      
+        box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.425);
+        transform: translateY(-50%);
+        z-index: 9999;
+        text-align: center;
+        .names{
+            padding-top: 90px;
+            p{
+                padding: 0;
+                margin: 0;
+            }
+            .id{
+                color: gray;
+                margin-bottom: 15px;
+            }            
+        }
+        span{
+            font-size: 14px;
+            padding: 5px 20px;
+            border:1px solid darkgray;
+            background-color: transparent;
+            cursor: pointer;
+        }
+        .circle{
+            border-radius: 20px;
+        }
+        .square{
+            border-radius: 5px;
+        }
+
+    }
+
+    .menu::after{
+        position: absolute;
+        top: -13px;
+        right: 19px;
+        content: '';
+        border-top: 7px solid transparent;
+        border-bottom: 7px solid $menucolor;
+        border-right: 7px solid transparent;
+        border-left: 7px solid transparent;
+    }
+    .menu::before{
+        position: absolute;
+        top: -14px;
+        right: 19px;
+        content: '';
+        border-top: 7px solid transparent;
+        border-bottom: 7px solid darkgray;
+        border-right: 7px solid transparent;
+        border-left: 7px solid transparent;
+    }
+    .menu-profileImage{
+        position: absolute;
+        top: 20%;
+        left: 50%;
+        transform: translate3d(-50%,-50%,0);
+        cursor: pointer;
+        border-radius: 50%;
+        border : 1px solid rgb(200, 200, 200);
+        width: 60px;
+        height: 60px;
+        overflow: hidden;
+        img{
+            width: 60px;
+            height: 60px;
+            object-fit: cover;
+        }
+    }
+ 
+    
+}

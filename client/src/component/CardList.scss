@@ -1,0 +1,142 @@
+.CardList{
+    .maintitle{
+        font-size: 24px;
+        padding: 20px 0;
+        font-weight: bold;
+    }
+    .ranking-wrapper{
+        margin:0 auto;
+        width: var(--width);
+        .-wrapper{
+            overflow: hidden;
+        }
+        .ranking{
+            display: flex;
+            list-style: none;
+            padding:0;
+            margin-top: 10px;  
+            transition: all .3s;
+            transform: translateX();
+            flex-wrap: wrap;
+            margin-left: -20px;
+        }
+        .ranking li{    
+            margin-left: 20px;
+            transition: all .3s;  
+            width: 204px; 
+        }
+        
+        .ranking-content-poster{ 
+            position: relative;   
+            border-radius: 10px;
+            width: 100%;
+            height: 300px;
+            overflow: hidden;
+            cursor: pointer;
+        }
+        .ranking-content-poster .info{
+            position: absolute;
+            top: 0px;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.788);
+            padding: 25px;
+            transition: all 0.5s;
+            opacity: 0;
+        }
+        .ranking-content-poster .info p{
+            color: white;
+            font-size: 12px; 
+
+            overflow: hidden;
+            text-overflow: ellipsis;
+            word-wrap: break-word;
+            display: -webkit-box;
+            -webkit-line-clamp: 13;
+            -webkit-box-orient: vertical;
+        }
+        .ranking-content-poster .info dl{
+            display: flex;
+            padding:  1px;
+            margin: 0;
+            color:white;
+        }
+        dt{
+            color: wheat;
+        }
+        dd{
+            margin-left: 7px;
+        }
+        .ranking-content-poster:hover .info{
+            opacity: 1;
+        }
+        .ranking-content:hover {
+            transform: translateY(-10px);
+        }
+        .ranking-content-poster img{    
+            width: 100%;    
+            height: 300px;
+        }
+        .ranking-content-poster .number{
+            position:absolute;
+            top:0px;
+            padding: 10px;    
+            color: white;
+            font-size: 30px;
+            font-style: italic;
+            font-family: 'SF-UI-Display-Thin', sans-serif;
+        }
+        
+        .ranking-content-poster .point{
+            position:absolute;
+            width: 100%;
+            bottom: 10px;
+            color: white;
+            font-size: 16px;
+            text-align: center;
+            padding: 3px 0px;
+        }
+        
+        .blurEffect {
+            -webkit-backdrop-filter: blur(1px);
+            backdrop-filter: blur(1px);
+            background-color: rgba(32, 32, 32, 0.061);
+        }
+        .ranking-content .title{            
+            text-align: left;
+            h4{
+                font-size: 16px;
+                font-weight: bold;
+                margin-top: 10px;
+                margin-bottom: 5px;
+            }
+            p{
+                font-size: 12px;
+                color: #98989c;
+            }
+                    
+        }
+        
+
+    }
+    
+    
+    .slide{
+        width: 40px;
+        height: 40px;
+        background-color: white;
+        border-radius: 30px;
+        position: absolute;
+        top: 142px;
+        font-size: 20px;  
+        text-align: center;
+        line-height: 40px;
+    
+    }
+    .slide-left{
+        left: -20px;        
+    }
+    .slide-right{
+        right: -20px;    
+    }
+}

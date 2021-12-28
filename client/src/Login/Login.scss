@@ -1,0 +1,155 @@
+$width : 342px;
+$skyblue : #116DFF;
+@mixin sosialLoginbtn {
+    .sosialbox{
+        margin-top: 30px;
+        margin-bottom: 30px;
+    }
+    .socialLoginButton{        
+        width:$width;
+        height: 50px;
+        border: 1px solid black;            
+        margin: 0 auto;
+        margin-top: 15px;
+        background-color: white;
+        cursor: pointer;
+        .sosialLogin{
+           display: block;
+           line-height: 48px;  
+           color: white;
+        }   
+    }
+
+    .buttonIcon{
+        float: left;
+        width: 48px;
+        height: 48px; 
+        line-height: 48px;
+        border-right: 1px solid #000;  
+        background-color: white; 
+        .buttonImage{            
+            width: 15px;
+            height: 23px;
+        }   
+        .buttonImage2{            
+            width: 20px;
+            height: 20px;
+        }                      
+    }
+}
+
+@mixin xbtn{
+    .exit{
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        width: 50px;
+        height: 50px;
+        color: gray;
+        cursor: pointer;
+        transition: all 0.3s;
+    }
+    .exit:hover{
+        color: red;
+    }   
+}
+.Login{
+    position: relative;
+    height: 90vh;
+
+        .Login-box{
+            @include xbtn;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            text-align: center;
+            margin-top: 100px;
+            width: 500px;
+            outline: 1px solid var(--whitegray);
+            border-radius: 5px;
+            @include sosialLoginbtn;
+            h2{
+                padding-top: 35px;
+                padding-bottom: 35px;
+                margin: 0;
+                font-size: 40px;
+            }
+            p{
+                margin-bottom: 5px;
+            }
+            .go_register{
+                color:$skyblue;
+                cursor: pointer;
+            }
+            .login{
+                position: relative;
+                margin: 0 auto;
+                margin-top: 30px;
+                width: $width;
+                padding: 5px 10px;
+                border-bottom: 1px solid var(--whitegray);
+            }
+            label{
+                position: absolute;
+                left: 12px;
+                color:gray;
+                transition: all 0.3s;
+                cursor: auto;
+            }
+            .focus{
+                border-bottom: 1px solid rgb(145, 110, 227);
+            }
+            .focus label{
+                font-size: 12px;
+                top: -12px;
+                cursor: none;
+            }
+            .focus2 label{
+                font-size: 12px;
+                top: -12px;
+                cursor: none;
+            }
+            input{
+                border:none;
+                width: 100%;
+            }
+            input:focus{
+                outline: none;
+            }          
+            
+            .bottom{
+                position: relative;
+                width: $width;
+                height: 170px;
+                margin: 0 auto;
+                a{
+                    position: absolute;
+                    right: 0;
+                    font-size: 12px;
+                    cursor: pointer;
+                }
+                a:hover{
+                    color: $skyblue;
+                }
+                .loginbtn{
+                    position: absolute;                                        
+                    bottom: 50px;
+                    width: 100%;
+                    height: 48px;
+                    cursor: pointer;
+                    padding: 10px 0px;
+                    border: 1px solid $skyblue;
+                    color: $skyblue;
+                    border-radius: 3px;      
+                    transition: all 0.4s;        
+                }
+                .loginbtn:hover{
+                    background-color: $skyblue;
+                    color: white;
+                }
+            }
+            
+    
+    }
+    
+}

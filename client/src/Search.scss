@@ -1,0 +1,137 @@
+html{
+    font-size: 16px;
+
+}
+$darkgray :#98989C;
+@mixin h3{
+    .title{
+        padding-top: 64px;
+        padding-bottom: 44px;
+        font-size: 32px;
+        font-weight:600;
+        .title-accent{
+            color: #E92130;
+        }
+    }    
+}
+@mixin tabmenu{
+    .tabmenu{        
+        display: flex;
+        list-style: none;
+        border-bottom: 1px solid var(--whitegray);
+        padding: 0;
+    }
+    .tabmenu li{        
+        margin-bottom: -1px;
+        vertical-align: middle;
+        height: 40px;
+        font-size : 17px;
+        margin-right: 40px;          
+    }
+    .tabmenu .menu:hover{
+        cursor: pointer;
+    }
+    .tabmenu .on{
+        font-weight : bold;
+        border-collapse: collapse;
+        border-bottom: 1px solid black;
+    }
+    .tabmenu .off{
+        color: $darkgray;        
+    }
+    .tabmenu .off:hover{
+        cursor: Default;
+    }
+}
+@mixin detail{
+    .detail{       
+        font-size: 15px;
+        .classification{
+            font-size: 24px;
+            padding: 20px 0;
+            span{
+                color : $darkgray;
+            }
+        }
+        ul{
+            list-style: none;
+            padding: 0;
+        }
+        li{
+            height: 188px; 
+            margin-bottom: 30px;
+        }
+        .detail-list-poster{
+            width: 128px;
+            height: 188px; 
+            border-radius: 10px;
+            float: left;
+            cursor: pointer;
+            overflow: hidden;
+            img{
+                width: 100%;
+                height:100%;
+                object-fit:cover;
+             }
+        }       
+        .detail-list-info{
+            margin-left: 20px;
+            float: left;
+
+            .detail-title{
+                display: inline;
+                cursor: pointer;
+                font-size: 18px;
+                font-weight: 600;
+            }
+            .detail-subtitle{
+                font-weight: 600;
+                margin-bottom: 20px;
+            }
+            dl{
+                display: flex;
+                margin:0;                
+                text-overflow:ellipsis
+
+            }
+
+            dt{
+                color: $darkgray;
+                font-weight: normal;
+               margin-right: 10px;               
+            }
+            dd{
+                width: 400px;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                word-wrap: break-word;
+                display: -webkit-box;
+                -webkit-line-clamp: 2;
+                -webkit-box-orient: vertical;
+            }
+        }
+        
+    }
+}
+
+
+.Search{
+    
+    background-color: var(--whitegray-light) ;
+    height: 100%;
+    padding-bottom: 10px;
+    .search-body{
+
+        width: var(--width);
+        margin: 0 auto;
+
+        @include h3;
+        @include tabmenu;
+    
+               
+    }
+
+}
+.SearchComponent{
+    @include detail;
+}

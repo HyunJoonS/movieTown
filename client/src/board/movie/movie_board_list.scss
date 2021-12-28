@@ -1,0 +1,12 @@
+.movie_board_list, .movie_board_view,.movie_board_write,.movie_board_modify{
+    background-color: #fff;
+
+    h4{
+        font-weight: bold;
+    }
+    .wrap{
+        width: var(--width);
+        margin: 0 auto;
+        padding-bottom: 50px;
+    }
+}

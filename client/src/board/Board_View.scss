@@ -1,0 +1,239 @@
+$default_font : 13px;
+$solidColor : rgb(212, 212, 212);
+$skybluebtn : rgb(66, 133, 244);
+@mixin btn {
+    font-size: $default_font;
+    cursor: pointer;
+    padding: 10px;
+    margin-left: 10px;
+    background-color: #eee;
+    box-shadow: 1px 1px 1px 1px #eee;  
+    border-radius: 5px;    
+}
+.Board_View{    
+    background: white;
+    margin-bottom: 25px;
+
+    .button{
+        position: relative;
+        font-size: $default_font;
+        .btn_right{
+            position: absolute;
+            right: 20px;
+            top: 30px;
+        }
+        span{            
+            cursor: pointer;
+            padding: 10px;
+            margin-left: 10px;
+            background-color: #eee;
+            box-shadow: 1px 1px 1px 1px #eee;  
+            border-radius: 5px;
+          
+        }        
+    }
+    .profileImg{
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        overflow: hidden;
+        border: 1px solid $solidColor;
+        margin-right: 10px;
+    }
+    .post_wrap{
+        padding: 30px;
+        border-radius: 10px;
+        border: 1px solid $solidColor;
+        .tit{
+            font-size: $default_font;
+            color: $skybluebtn;
+            font-weight: bold;
+            cursor: pointer;            
+        }
+
+        .writer{
+            display: flex;
+            border-bottom: 1px solid $solidColor;
+            padding-bottom: 20px;
+            
+            .userinfo{
+                font-size: $default_font+1px;
+                padding-top: 5px;
+                .userNames{
+                    font-weight: bold;
+                }
+                .date_times{
+                    color: gray;
+                    span{
+                        margin-right: 10px;
+                    }
+                }
+            }
+        }
+        .text{
+            margin-top: 10px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid $solidColor;
+            min-height: 400px;
+        }
+        .user_post_more{
+            margin-top: 30px;
+            display: flex;
+            .userNames{
+                cursor: pointer;
+                font-size: $default_font+1px;
+                line-height: 40px;
+            }
+        }
+        .like{
+            font-size: $default_font+1px;
+            position: relative;
+            margin-top: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid $solidColor;
+            span{
+                margin-right: 5px;
+            }
+            .report{
+                position: absolute;
+                right: 0;
+                top: 0;
+                span{
+                    padding-left: 10px;
+                }
+                span:nth-child(1){
+                    border-right: 1px solid $solidColor;                    
+                    padding-right: 10px;
+                }
+            }        
+        }
+        .comment_tit{
+            position: relative;
+            margin-top: 20px;
+            margin-bottom: 15px;
+            h4{
+                font-size: 20px;
+                display: inline;
+                margin-right: 10px;
+            }
+            span{
+                cursor: pointer;
+                font-size: $default_font+1px;
+                margin-right: 7px;
+                color: gray;
+            }
+            .on{
+                color: black;
+                font-weight: bold;
+            }
+        }
+
+        .user_comment_list{
+            ul{
+                list-style: none;
+                padding: 0;
+                margin: 0;
+            }            
+            .Reple{
+                padding-left: 50px;
+            }            
+            ul li:not(:first-of-type){
+                border-top: 1px solid #f2f2f2;
+                margin-top: 10px; 
+            }
+            li{
+                font-size: $default_font;
+                padding: 12px 23px 10px 0px;
+                display: flex;                
+                .userdatetime{
+                    color: gray;
+                    margin-top: 10px;
+                    span{
+                        margin-right: 10px;
+                    }
+                    .reple_btn{
+                        cursor: pointer;
+                    }
+                }
+                .Reple-writer{
+                    border: 1px solid #f53535;
+                    border-radius: 8px;
+                    padding: 1px 1px;
+                    margin-left: 5px;
+                    color: #f53535;
+                    font-size: 10px;
+                    font-weight: bold;
+                }
+            }
+        }
+    }
+    .comment_writer{
+        margin-top: 10px;
+        font-size: $default_font;
+        border: 2px solid $solidColor;
+        border-radius: 5px;
+        padding: 10px 10px;
+               
+    }
+    .ml50{
+        margin-left: 50px;
+    }
+    .comment_inbox_name{
+        font-weight: bold;
+    }
+    textarea{
+        width: 100%;
+        background-color: transparent;
+        outline: none;
+        border:none;
+        resize: none;
+    }
+    .submit{
+        text-align: right;
+        button{
+            border : none;
+            @include btn;
+            color: white;
+            padding: 5px 15px;
+            color: #b7b7b7;
+            font-weight: bold;
+            box-shadow: none;
+            background-color: transparent;
+
+        }
+    }
+    .ArticleBottomBtns{
+        position: relative;
+        .left_area{
+            position: absolute;
+            top: 15px;
+            left: -10px;
+            span{
+                @include btn;                
+            }
+            .skyblue_btn{
+                background-color: $skybluebtn;
+                color: white;
+            }
+        }
+        .right_area{
+            position: absolute;
+            top: 15px;
+            right: 0;
+            span{
+                @include btn;
+            }
+        }
+    }
+    
+}
+
+.bbs_list{    
+    margin-top : 80px;
+    h4{
+        margin-bottom: 5px;
+    }
+    table{
+        border: 1px solid #d4d4d4;
+    }
+}
