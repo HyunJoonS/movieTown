@@ -19,7 +19,6 @@ import Board_Movie_List from 'board/movie/movie_board_list';
 import Board_Movie_View from 'board/movie/movie_board_view';
 import Board_Movie_Write from 'board/movie/movie_board_write';
 import Board_Movie_Modify from 'board/movie/movie_board_modify';
-
 import Chatting from './component/Chatting';
 
 
@@ -52,7 +51,7 @@ function App() {
             
             <Route path="/mypage"><Mypage/></Route>
             <Route path="/board/:type/write"><Board_Movie_Write /></Route>
-            <Route path="/board/:type/modify"><Board_Movie_Modify /></Route>
+            <Route path="/board/modify/:id"><Board_Movie_Modify /></Route>
             <Route path="/board/:type/:id"><Board_Movie_View /></Route>
             <Route path="/board/:type"><Board_Movie_List /></Route>
 

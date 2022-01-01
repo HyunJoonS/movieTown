@@ -15,15 +15,15 @@ function Navbar() {
     let loginState  = useSelector(a => a.reducer_user);
     let location = useLocation();
     useEffect(()=>{
-        console.log('네브바')
+        // console.log('네브바')
         axios.get('/api/login').then((res)=>{
-            console.log('보냄 payload : ', res.data)
+            // console.log('보냄 payload : ', res.data)
              dispatch({type :'login', payload:res.data})
         })        
     },[location])
     useEffect(()=>{
         setState(loginState);
-        console.log('loginstate : ',loginState);
+        // console.log('loginstate : ',loginState);
     },[loginState])
     return (
         <>
@@ -56,8 +56,8 @@ function 로그인(params) {
     const logout = () => {
         axios.get('/api/logout').then((res) => {
             params.setState([]);
+            history.push('/');
             alert('로그아웃 되었습니다.');
-
         });
     }
     const MenuOpenEvent = ()=>{

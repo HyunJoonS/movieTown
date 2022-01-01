@@ -8,12 +8,12 @@ function Movie_board_write(params) {
     let history = useHistory();
     useEffect(()=>{
         axios.get('/api/login').then((res)=>{
-            if(res.data==true){            
-            }
-            else{
-                history.push('/login');
-            }
+
+        }).catch((err)=>{
+            alert('로그인을 해주세요');
+            history.goBack();
         })
+        
     },[])
     return(
         <div className="movie_board_write">

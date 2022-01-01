@@ -12,11 +12,25 @@ function BoardView(params) {
     const st_date = new Date(Date.now() - offset).toISOString().substr(0, 10).replace(/-/gi, '.');
     const location = useLocation();
     let [답글state,set답글State]=useState(null);
+    let loginState  = useSelector(a => a.reducer_user);
+
     useEffect(() => {
         console.log('params.comment : ',params.comment);
         console.log('params.state : ',params.state);
         // console.log(location.state);
     }, [params])
+
+    function 게시물수정하기({userID}){
+        return (
+            <>{
+                userID == params.state[params.index].writerID?
+                <span className='skyblue_btn' onClick={() => { history.push('/board/modify/'+params.state[params.index].boardID)}}>수정하기</span>
+                :null
+            }
+            </>
+        )           
+    }
+
     function pageEvent(page) {
         if (page == '이전') {
             if (params.state.length - params.index > 0) {
@@ -38,11 +52,25 @@ function BoardView(params) {
         }
     }
 
+
+    const 글쓰기buttonEvent = ()=>{
+        if(loginState.length >0){
+            console.log('글쓰기',loginState);
+            history.push(`./${params.type}/write`)
+        }
+        else{
+            alert('로그인을 해주세요.')
+        }
+    }
     return (
         <div>
             <div className='Board_View'>
                 <div className="button">
                     <div className='btn_right'>
+                        {loginState.length>0?
+                        <게시물수정하기 userID={loginState[0].userID}></게시물수정하기>
+                        :null
+                        }
                         <span onClick={() => { pageEvent('이전') }}>이전글</span>
                         <span onClick={() => { pageEvent('다음') }}>다음글</span>
                         <span onClick={() => {
@@ -61,7 +89,7 @@ function BoardView(params) {
                         </div>
                         <div className="userinfo">
                             <div className="userNames">
-                                {params.state[params.index].writerID}
+                                {params.state[params.index].NickName}
                             </div>
                             <div className="date_times">
                                 <span>{params.state[params.index].createDate.substring(0, 10)}</span>
@@ -81,7 +109,7 @@ function BoardView(params) {
                         <div className="userNames" onClick={() => {
                             alert('기능 미구현');
                         }}>
-                            <b>{params.state[params.index].writerID}</b>님의 게시글 더보기{' >'}
+                            <b>{params.state[params.index].NickName}</b>님의 게시글 더보기{' >'}
                         </div>
                     </div>
                     <div className='like'>
@@ -111,7 +139,7 @@ function BoardView(params) {
                                             </div>
                                             <div className='textbox'>
                                                 <div className="userNames">
-                                                    <b>{data.userID}</b>
+                                                    <b>{data.NickName}</b>
                                                     {data.userID==params.state[params.index].writerID?<span className='Reple-writer'>작성자</span>:null}                                                  
                                                 </div>
                                                 <div className="userText">
@@ -136,7 +164,7 @@ function BoardView(params) {
                 <div className='ArticleBottomBtns'>
                     <div className="left_area">
                         <span className="skyblue_btn"
-                            onClick={() => { history.push('./write') }}>
+                            onClick={글쓰기buttonEvent}>
                             글쓰기
                         </span>
                     </div>
@@ -156,7 +184,7 @@ function BoardView(params) {
                             return (
                                 <tr onClick={() => { history.push('./' + data.boardID); window.scrollTo(0, 0); }} className={params.index === i ? 'selected' : ''}>
                                     <td style={{ width: '70%' }}>{data.boardTitle}</td>
-                                    <td style={{ width: '15%' }}>{data.writerID}</td>
+                                    <td style={{ width: '15%' }}>{data.NickName}</td>
                                     <td style={{ width: '15%' }}>{st_date === data.createDate.substring(0, 10) ? data.createDate.substring(12, 17) : data.createDate}</td>
                                 </tr>
                             )

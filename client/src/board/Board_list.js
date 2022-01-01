@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { isElementOfType } from "react-dom/test-utils";
 import { useHistory } from "react-router";
 import './Board_list.scss'
-
+import {useSelector} from 'react-redux'
 function Board_List(params) {
     return (
         <div>
@@ -39,6 +39,16 @@ function ListStyle(params) {
     const offset = new Date().getTimezoneOffset() * 60000;
     const st_date = new Date(Date.now() - offset).toISOString().substr(0, 10).replace(/-/gi, '.');
     let history = useHistory();
+    let loginState  = useSelector(a => a.reducer_user);
+    const 글쓰기buttonEvent = ()=>{
+        if(loginState.length >0){
+            console.log('글쓰기',loginState);
+            history.push(`./${params.type}/write`)
+        }
+        else{
+            alert('로그인을 해주세요.')
+        }
+    }
     return (
         <div className='ListStyle'>
             <table>
@@ -63,7 +73,7 @@ function ListStyle(params) {
                             }}>
                                 <td>{data.boardID}</td>
                                 <td>{data.boardTitle}{data.comments>0?<span className="bbs-comments-count">[{data.comments}]</span>:null}</td>
-                                <td>{data.writerID}</td>
+                                <td>{data.NickName}</td>
                                 <td>{st_date == data.createDate.substring(0, 10) ? data.createDate.substring(12, 17) : data.createDate}</td>
                                 <td>{data.read_Count}</td>
                             </tr>
@@ -73,7 +83,7 @@ function ListStyle(params) {
             </table>
             {params.state.length > 0 ? null : <h5 style={{ marginTop: '40px' }}>게시글이 없습니다.</h5>}
             <div className='postbtn'>
-                <span onClick={() => { history.push(`./${params.type}/write`) }}>글쓰기</span>
+                <span onClick={글쓰기buttonEvent}>글쓰기</span>
             </div>
 
         </div>

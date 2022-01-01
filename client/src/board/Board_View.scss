@@ -29,8 +29,12 @@ $skybluebtn : rgb(66, 133, 244);
             background-color: #eee;
             box-shadow: 1px 1px 1px 1px #eee;  
             border-radius: 5px;
-          
+         
         }        
+        .skyblue_btn{
+            background-color: $skybluebtn;
+            color: white;
+        }
     }
     .profileImg{
         border-radius: 50%;

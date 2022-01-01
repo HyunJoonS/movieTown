@@ -42,14 +42,6 @@ app.use(sessionMiddleware)
 app.use(passport.initialize());
 app.use(passport.session());
 
-
-
-// io.on('connection', (socket) => {
-//   const req = socket.request
-//   console.log('socket sessionID : ',req.session) // Typescript will warn that session is not in IncomingMessage
-// });
-
-
 //라우터
 app.use('/api', require('./routes/tmdbapi') );
 app.use('/api', require('./routes/review') );
