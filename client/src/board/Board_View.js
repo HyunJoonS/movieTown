@@ -195,6 +195,7 @@ function BoardView(params) {
         </div>
     )
 }
+
 function 댓글({boardID}){    
     let loginState = useSelector(state => state.reducer_user);
     let history = useHistory();

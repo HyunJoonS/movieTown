@@ -36,12 +36,8 @@ function reducer_user(state = userInfo, action) {
     console.log('받음 payload : ', action.payload)
     return action.payload;      
   }
-  if(action.type ==='logout'){
-    let copy = {...state}
-    window.sessionStorage.removeItem('loginID');
-    copy.id = null;
-    copy.login = false;
-    return copy;
+  if(action.type ==='logout'){    
+    return [];
   }
   else{
     return state;

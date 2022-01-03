@@ -4,12 +4,13 @@ import 'react-quill/dist/quill.snow.css';
 import { useEffect, useMemo, useRef, useState } from "react";
 import axios from "axios";
 import './Board_Write.scss'
+import { useSelector } from "react-redux";
 function Board_Write(params) {
     let history = useHistory();
     let [value,setValue]=useState('');
     let [selected,setSelected] = useState('none');
     let [title,setTitle] = useState('');
-
+    let loginState = useSelector(a => a.reducer_user)
     
     useEffect(()=>{
       setSelected(params.type);
@@ -32,6 +33,7 @@ function Board_Write(params) {
       if(body.text && body.title && selected != 'none'){
         axios.post('/api/board/write',body).then((res)=>{
           alert(res.data);
+          history.push('/board/'+params.type)
         })
         console.log(body);
       }else{
@@ -125,8 +127,9 @@ function Board_Write(params) {
             <div className="selectBoard" >
               <select value={selected} onChange={selectHandler} className='form'>   
                 <option value='none'>===선택===</option>             
+                <option value='notice' hidden>공지사항</option>   
                 <option value='movie'>영화 게시판</option>
-                <option value='TV'>TV 게시판</option>
+                <option value='tv'>TV 게시판</option>
                 <option value='자유'>자유 게시판</option>
               </select>              
             </div>

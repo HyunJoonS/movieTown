@@ -13,6 +13,13 @@ function Movie_board_view(params) {
     let [index,setIndex]=useState(0); //현재게시글은 몇번째인가?
     let path = useParams();
     let history = useHistory();
+    const boardName = [
+        {type : 'notice', title : '공지사항'},
+        {type : 'movie', title : '영화 게시판'},
+        {type : 'tv', title : 'TV 게시판'},
+        {type : 'free', title : '자유 게시판'}
+    ]
+    let board_title =  boardName.find(e => e.type == path.type).title
     useEffect(()=>{
         axios.get('/api/board/limit/'+path.id).then((res)=>{
             if(res.data.length===0){
@@ -26,6 +33,7 @@ function Movie_board_view(params) {
                 console.log('게시판목록 :',res.data);
                 console.log('index :',index);
                 axios.post('/api/board/readcount',{boardID:path.id});
+                console.log('bodertitle',board_title);
             }
         })
     },[useLocation()])
@@ -49,7 +57,7 @@ function Movie_board_view(params) {
             <div className="wrap">
                 <NavbarSub/>
                 {state.length>0 ?                
-                <BoardView title={'영화 게시판'} type={path.type} 
+                <BoardView title={board_title} type={path.type} 
                 state={state}
                 index={index}
                 comment={comment}

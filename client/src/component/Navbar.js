@@ -19,7 +19,10 @@ function Navbar() {
         axios.get('/api/login').then((res)=>{
             // console.log('보냄 payload : ', res.data)
              dispatch({type :'login', payload:res.data})
-        })        
+        }).catch((err)=>{
+            console.log('네브바 로그아웃')
+            dispatch({type: 'logout'})
+        }) 
     },[location])
     useEffect(()=>{
         setState(loginState);
@@ -56,6 +59,7 @@ function 로그인(params) {
     const logout = () => {
         axios.get('/api/logout').then((res) => {
             params.setState([]);
+            dispatch({type: 'logout'})
             history.push('/');
             alert('로그아웃 되었습니다.');
         });

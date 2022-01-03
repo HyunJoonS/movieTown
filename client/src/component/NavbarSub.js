@@ -85,8 +85,9 @@ function NavbarSub(props) {
                         <ul className='nev-sublist on' 
                             onMouseLeave={() => { setChildVisible({ ...childVisible, hover: props.page }) }}
                             >
-                            <li className={childVisible.hover == 'community' ? 'on' : ''}
-                                onMouseEnter={() => { setChildVisible({ hover: 'community' }) }}>
+                            <li className={childVisible.hover == 'notice-board' ? 'on' : ''}
+                                onMouseEnter={() => { setChildVisible({ hover: 'notice-board' }) }}
+                                onClick={()=>{history.push('/board/notice')}}>
                                 공지사항
                             </li>
                             <li className={childVisible.hover == 'movie-board' ? 'on' : ''}

@@ -6,7 +6,7 @@ import {useSelector} from 'react-redux'
 function Board_List(params) {
     return (
         <div>
-            <Board_top_List value={params.value} setValue={params.setValue} />
+            <Board_top_List value={params.value} setValue={params.setValue} type={params.type} />
             <ListStyle state={params.state} value={params.value} type={params.type} />
             <SearchBar state={params.state} type={params.type}
                 value={params.value} setValue={params.setValue} />
@@ -23,8 +23,12 @@ function Board_top_List(params) {
     }
     return (
         <div className='BoardList'>
-            <input type="checkbox" id='hide_Notice' />
-            <label for='hide_Notice'>공지사항 숨기기</label>
+            {params.type == 'notice' ? null : <>
+                <input type="checkbox" id='hide_Notice' />
+                <label for='hide_Notice'>공지사항 숨기기</label>
+            </>
+            }
+            
             <select name="fruits" class="select" onChange={selectHandler}>
                 <option value="15">15개씩</option>
                 <option value="20">20개씩</option>
@@ -43,6 +47,11 @@ function ListStyle(params) {
     const 글쓰기buttonEvent = ()=>{
         if(loginState.length >0){
             console.log('글쓰기',loginState);
+            if(params.type == 'notice'){ //공지사항
+                if(loginState[0].class != 'admin'){
+                    return alert('관리자가 아닙니다.');
+                }
+            }
             history.push(`./${params.type}/write`)
         }
         else{

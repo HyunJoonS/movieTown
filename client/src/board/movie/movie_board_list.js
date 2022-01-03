@@ -12,6 +12,7 @@ function Movie_board_list(params) {
     let path = useParams();
 
     const boardName = [
+        {type : 'notice', title : '공지사항'},
         {type : 'movie', title : '영화 게시판'},
         {type : 'tv', title : 'TV 게시판'},
         {type : 'free', title : '자유 게시판'}
