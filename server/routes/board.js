@@ -95,19 +95,19 @@ router.get('/board/list/:id',(req,res)=>{
             기간='';
             break;
         case '1일':
-            기간='AND createDate >= DATE_ADD(NOW(),INTERVAL -1 DAY '
+            기간='AND createDate >= DATE_ADD(NOW(),INTERVAL -1 DAY) '
             break;
         case '1주':
-            기간 = 'AND createDate >= DATE_ADD(NOW(),INTERVAL -1 WEEK '
+            기간 = 'AND createDate >= DATE_ADD(NOW(),INTERVAL -1 WEEK) '
             break;
         case '1개월':
-            기간 = 'AND createDate >= DATE_ADD(NOW(),INTERVAL -1 MONTH '
+            기간 = 'AND createDate >= DATE_ADD(NOW(),INTERVAL -1 MONTH) '
             break;
         case '6개월':
-            기간 = 'AND createDate >= DATE_ADD(NOW(),INTERVAL -6 MONTH '
+            기간 = 'AND createDate >= DATE_ADD(NOW(),INTERVAL -6 MONTH) '
             break;
         case '1년':
-            기간 = 'AND createDate >= DATE_ADD(NOW(),INTERVAL -1 YEAR '
+            기간 = 'AND createDate >= DATE_ADD(NOW(),INTERVAL -1 YEAR) '
             break;
     }    
 
@@ -125,7 +125,7 @@ router.get('/board/list/:id',(req,res)=>{
             break;
         case '글작성자':
             검색어!=''?
-            검색범위 = `AND writerID LIKE '${검색어}'`
+            검색범위 = `AND NickName LIKE '${검색어}'`
             :검색범위=''
             break;
         case '댓글내용':
@@ -203,26 +203,31 @@ router.get('/board/limit/:id',(req,res)=>{
 
 //#댓글 달기
 router.post('/board/comments',로그인체크,(req,res)=>{
-    let seq;
-    let parent;
-    if(req.body.depth>0){ //대댓글일 경우
-        seq=`(SELECT * FROM (SELECT MAX(seq)+1 FROM board_comment WHERE parent = ${req.body.parent}) AS temp)`
-        parent=req.body.parent;
-    }else{
-        parent=`(SELECT * FROM (SELECT MAX(id)+1 FROM board_comment) AS temp)`
-        seq=0;
-    }
-    let sql = `INSERT INTO board_comment (boardID, userID, commentText, createDate, parent, depth, seq) VALUE 
-    (?,?,?,NOW(), ? ,?, ?)`   
-    let params =[
-        req.body.borderID,
-        req.user[0].userID,
-        req.body.text,        
-        parent, 
-        req.body.depth, 
-        seq
-    ]    
-    connection.query(sql,params,(err,rows,fields)=>{
+    
+    let myid = `(SELECT * FROM (SELECT MAX(id)+1 FROM board_comment) AS TEMP)`; //댓글index
+    let bbsID = req.body.boardID; //게시물번호
+    let text = req.body.text;
+    let userID = req.user[0].userID;
+    let parent = req.body.parent;
+    let groupID = `(SELECT * FROM (SELECT groupID FROM board_comment WHERE id=${parent}) AS groupID)`;
+    let depth = `(SELECT * FROM (SELECT depth+1 depth FROM board_comment WHERE id=${parent}) AS depth)`;
+    let seq = `(SELECT * FROM (SELECT MAX(seq)+1 FROM board_comment WHERE groupID=(SELECT groupID FROM board_comment WHERE id=${parent} LIMIT 1)) AS seq)`
+    console.log(req.body.text,text)
+   let values;
+
+    switch (req.body.action) {
+        case '댓글':
+            values=`(${bbsID}, ${userID}, '${text}', NOW(), ${myid}, ${myid}, 0, 0)`            
+            break;
+        case '대댓글':
+            values=`(${bbsID}, ${userID}, '${text}', NOW(), ${groupID}, ${parent}, ${depth}, ${seq})`   
+            break;
+    }      
+
+    let sql = `INSERT INTO board_comment (boardID, userID, commentText, createDate, groupID, parent, depth, seq) VALUE 
+    ${values}` 
+
+    connection.query(sql,(err,rows,fields)=>{
         try{
             if(err){
                 console.log(err);

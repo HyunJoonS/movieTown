@@ -143,7 +143,7 @@ function BoardView(params) {
                                                     {data.userID==params.state[params.index].writerID?<span className='Reple-writer'>작성자</span>:null}                                                  
                                                 </div>
                                                 <div className="userText">
-                                                    {data.depth>1?<b>{params.comment[params.comment.findIndex((e)=>e.id==data.parent)].userID} </b>:null}
+                                                    {data.depth>1?<b>{params.comment[params.comment.findIndex((e)=>e.id==data.parent)].NickName} </b>:null}
                                                     {data.commentText}
                                                 </div>
                                                 <div className="userdatetime">
@@ -158,7 +158,7 @@ function BoardView(params) {
                                 }                            
                             </ul>
                         </div>
-                        <댓글/>
+                        <댓글 boardID={params.state[params.index].boardID}/>
                     </div>
                 </div>
                 <div className='ArticleBottomBtns'>
@@ -195,35 +195,22 @@ function BoardView(params) {
         </div>
     )
 }
-function 댓글(props){    
-    let user = useSelector(state => state.reducer_user);
-    return (
-        <div className='comment_writer' >
-            <div className="comment_inbox_name">
-                {user.login?user.id:null}
-            </div>
-            <div className="comment_inbox_text">
-                <textarea type="text" placeholder="댓글을 남겨보세요" />
-            </div>
-            <div className="submit">
-                <button type="button" className='skyblue_btn'>등록</button>
-            </div>
-        </div>
-    )
-}
-function 답글(props){
-    let user = useSelector(state => state.reducer_user);
+function 댓글({boardID}){    
+    let loginState = useSelector(state => state.reducer_user);
     let history = useHistory();
     const inputRef=useRef();
    
     const submitEvent=()=>{
-        if(user.login){
+        if(loginState.length>0){
             let body={
-                borderID : props.comment.boardID,
-                text : inputRef.current.value,                                 
+                boardID : boardID,
+                text : inputRef.current.value,
+                parent : 0,
+                action : '댓글'                          
             } 
             axios.post('/api/board/comments',body).then((res)=>{
                 alert(res.data);
+                window.location.reload();
             })
         }
         else{
@@ -231,7 +218,42 @@ function 답글(props){
         }
     }
 
-
+    return (
+        <div className='comment_writer' >
+            <div className="comment_inbox_name">
+                {loginState.length>0?loginState[0].NickName:null}
+            </div>
+            <div className="comment_inbox_text">
+                <textarea type="text" placeholder="댓글을 남겨보세요"  ref={inputRef}/>
+            </div>
+            <div className="submit">
+                <button type="button" className='skyblue_btn' onClick={submitEvent}>등록</button>
+            </div>
+        </div>
+    )
+}
+function 답글(props){
+    let loginState = useSelector(state => state.reducer_user);
+    let history = useHistory();
+    const inputRef=useRef();
+   
+    const submitEvent=()=>{
+        if(loginState.length>0){
+            let body={
+                boardID : props.comment.boardID,
+                text : inputRef.current.value,  
+                parent : props.comment.id,
+                action : '대댓글'                          
+            } 
+            axios.post('/api/board/comments',body).then((res)=>{
+                alert(res.data);
+                window.location.reload();
+            })
+        }
+        else{
+            alert('로그인을 해주세요');
+        }
+    }
 
     const 취소=(e)=>{
         let result=window.confirm('이미 입력된 답글 내용을 취소 하겠습니까?')
@@ -243,7 +265,7 @@ function 답글(props){
     return (
         <div className='comment_writer ml50' style={(props.visible==props.index?{display:'block'}:{display:'none'})}>
             <div className="comment_inbox_name">
-                {user.login?user.id:null}
+                {loginState.length>0?loginState[0].NickName:null}
             </div>
             <div className="comment_inbox_text">
                 <textarea type="text" placeholder="댓글을 남겨보세요" ref={inputRef}/>
