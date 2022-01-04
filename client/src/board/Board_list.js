@@ -3,11 +3,16 @@ import { isElementOfType } from "react-dom/test-utils";
 import { useHistory } from "react-router";
 import './Board_list.scss'
 import {useSelector} from 'react-redux'
+import { param } from "jquery";
 function Board_List(params) {
+    let [hideNotice,setHideNotice] = useState(false);
+    useEffect(()=>{
+        console.log(hideNotice);
+    },[hideNotice])
     return (
         <div>
-            <Board_top_List value={params.value} setValue={params.setValue} type={params.type} />
-            <ListStyle state={params.state} value={params.value} type={params.type} />
+            <Board_top_List value={params.value} setValue={params.setValue} type={params.type} hideNotice={hideNotice} setHideNotice={setHideNotice}/>
+            <ListStyle state={params.state} value={params.value} type={params.type} notice={params.notice} hideNotice={hideNotice}/>
             <SearchBar state={params.state} type={params.type}
                 value={params.value} setValue={params.setValue} />
         </div>
@@ -15,16 +20,21 @@ function Board_List(params) {
 }
 
 function Board_top_List(params) {
+    const checkboxHandler = ()=>{
+        params.setHideNotice(!params.hideNotice)
+    }
+
     const selectHandler = (e) => {
         params.setValue({
             ...params.value,
             limit: e.target.value,
         });
     }
+
     return (
         <div className='BoardList'>
             {params.type == 'notice' ? null : <>
-                <input type="checkbox" id='hide_Notice' />
+                <input type="checkbox" id='hide_Notice' onChange={checkboxHandler}/>
                 <label for='hide_Notice'>공지사항 숨기기</label>
             </>
             }
@@ -71,6 +81,30 @@ function ListStyle(params) {
                     </tr>
                 </thead>
                 <tbody>
+                    {params.hideNotice==false && params.type!='notice'?
+                        params.notice.map((data) => {
+                            return (
+                                <tr className="notice" onClick={() => {
+                                    console.log('보낼데이터', params);
+                                    history.push({
+                                        pathname: `./${params.type}/` + data.boardID,
+                                        state: { params }
+                                    })
+                                }}>
+                                    <td>{data.boardID}</td>
+                                    <td>
+                                        <div className="notice-badge">공지</div>
+                                        {data.boardTitle}{data.comments > 0 ?
+                                            <span className="bbs-comments-count">[{data.comments}]</span> : null}
+                                    </td>
+                                    <td className="black">{data.NickName}</td>
+                                    <td className="black">{st_date == data.createDate.substring(0, 10) ? data.createDate.substring(12, 17) : data.createDate}</td>
+                                    <td className="black">{data.read_Count}</td>
+                                </tr>
+                            )
+                        })
+                        : null}
+                    
                     {params.state.map((data) => {
                         return (
                             <tr onClick={() => {

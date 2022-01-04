@@ -166,10 +166,10 @@ function Home() {
                                     커뮤니티
                                     {visible.hover == 'contents' ?
                                         <ul className='nev-sublist on'>
-                                            <li className='on' onClick={() => { history.push('/board/movie')}}>공지사항</li>
+                                            <li className='on' onClick={() => { history.push('/board/notice')}}>공지사항</li>
                                             <li className='on' onClick={() => { history.push('/board/movie')}}>영화</li>
-                                            <li className='on' onClick={() => { history.push('/board/movie')}}>TV 프로그램</li>
-                                            <li className='on' onClick={() => { history.push('/board/movie')}}>자유 게시판</li>
+                                            <li className='on' onClick={() => { history.push('/board/tv')}}>TV 프로그램</li>
+                                            <li className='on' onClick={() => { history.push('/board/free')}}>자유 게시판</li>
                                         </ul> : null
                                     }  
                                 </li>

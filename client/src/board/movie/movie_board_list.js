@@ -8,6 +8,7 @@ import { useParams } from "react-router-dom/cjs/react-router-dom.min";
 function Movie_board_list(params) {
     const location = useLocation();
     let [state,setState]=useState();
+    let [notice,setNotice]=useState();
     let [value,setValue]=useState();
     let path = useParams();
 
@@ -19,8 +20,6 @@ function Movie_board_list(params) {
     ]
     let board_title =  boardName.find(e => e.type == path.type)
     useEffect(()=>{        
-        console.log('type : ', board_title.title);
-        console.log('location state:',location.state);
         if(location.state){
             setValue(location.state.params.value);
             console.log('2',location.state.params.value)
@@ -50,6 +49,11 @@ function Movie_board_list(params) {
             console.log('1',value,state);
         }             
     },[value])
+    useEffect(()=>{
+        axios.get(`/api/bbs/notice`).then((res)=>{
+            setNotice(res.data);
+        }) 
+    },[])
     return (
         <div className='movie_board_list'>
             <div className="wrap">
@@ -57,6 +61,7 @@ function Movie_board_list(params) {
                 <h4>{board_title.title}</h4>
                 {state?
                 <Board_List 
+                    notice={notice}
                     state={state} 
                     type={path.type}
                     value={value}

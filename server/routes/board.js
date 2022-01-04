@@ -14,6 +14,25 @@ function 로그인체크(요청,응답,next){
     }
 }
 
+
+
+router.get('/bbs/notice/',(req,res)=>{
+    let sql = `SELECT A.boardID,C.NickName,A.boardTitle,A.boardText,A.writerID,A.boardType,A.read_Count,DATE_FORMAT(A.createDate,'%Y.%m.%d. %H:%i') AS createDate, IFNULL(comments,0) AS comments
+    from board A LEFT JOIN (SELECT boardID,COUNT(*) AS comments FROM board_comment GROUP BY boardID) B ON A.boardID = B.boardID LEFT JOIN login C ON A.writerID = C.userID 
+    WHERE boardType = 'notice' ORDER BY A.boardID DESC LIMIT 5`
+    connection.query(sql,(err,rows,filds)=>{
+        try{
+            if(err){
+                console.log(err);
+            }else{
+                res.send(rows);
+            }
+        }catch(err){
+            console.log(err);
+        }
+    })
+})
+
 //글쓰기
 router.post('/board/write',로그인체크,(req,res)=>{
     let sql = 'INSERT INTO board VALUE (NULL,?,?,NOW(),NOW(),?,?,0)'    

@@ -44,6 +44,26 @@ $default_font : 13px;
             margin-left: 5px;
             font-weight: bold;
         }
+        .notice{
+            background-color: #f9f9f8;
+            color:#ff4e59;
+            font-weight: bold;
+            .notice-badge{
+                display: inline;
+                padding: 2px 16px;
+                margin-right: 14px;
+                font-size: 12px;
+                background-color: #ffe3e4;
+                border: 1px solid #ffc6c9;
+                color:#ff4e59;
+                border-radius: 2px;
+            }
+            .black{
+                font-weight: initial;
+                color:#000;
+            }
+        }
+        
     }    
    
     .selected{
