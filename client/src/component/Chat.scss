@@ -157,15 +157,17 @@ $size-window-height:50px;
         margin-bottom: 100px;
         background-color: $bgColor;
         .hidebtn{
+            line-height: 0;
             position: absolute;
             right: 10px;
-            top: 5px;
+            top: 10px;
             cursor: pointer;
-            color: rgba(128, 128, 128, 0.616);            
-            transition: color 0.2s;
+            color: rgba(0, 0, 0, 0.281);            
+            transition: 0.2s;
         }
         .hidebtn:hover{
-            color: gray;
+            transform: rotate(-90deg);
+            color: rgba(0, 0, 0, 0.616);            
         }
         .mainChatBox{
             // border-bottom: 1px solid #000;            

@@ -6,7 +6,7 @@ const path       = require('path');
 const cors       = require('cors')
 const flash      = require('connect-flash');
 var session      = require('express-session')
-const {sessionStore}   = require('./dbconnection')
+const {sessionStore, connection}   = require('./dbconnection')
 const NickName   = require('./RandomNickname')
 const passport   = require('passport');
 
@@ -92,11 +92,7 @@ app.get("/api/debug", (req, res) => {
     })
   })
 
-
-
-  
   //socket.io
-
   const wrapper = (middleware) => (socket, next) => middleware(socket.request, {}, next);
   io.use(wrapper(sessionMiddleware,{autoSave:true}));
   io.use(wrapper(passport.initialize()))
@@ -131,13 +127,13 @@ app.get("/api/debug", (req, res) => {
       messageObj.type = 'system'
       messageObj.message = `${socket.request.user[0].NickName} 님이 연결되었습니다.`
       io.emit('every', messageObj);             
-       
+      
       
       //메세지 전달
-      socket.on('every',(data)=>{
+      socket.on('every',(data)=>{        
         messageObj.type = 'chat';
-        messageObj.message=data;
-        console.log(messageObj)
+        messageObj.message=data;   
+        socketDB_Insert(messageObj.id,data)
         socket.broadcast.emit('every',messageObj );
       })
     }
@@ -146,6 +142,38 @@ app.get("/api/debug", (req, res) => {
         console.log("SOCKETIO disconnect EVENT: ", socket.id, " client disconnect");
       })
     })
-const message =()=>{
-  
-}
+
+
+    const socketDB_Insert = (userID, text)=>{
+      let sql = 'INSERT INTO chat (`userID`,`dateTime`,`text`) VALUE (?,NOW(),?)'
+      let params=[
+        userID,text
+      ]
+      connection.query(sql,params,(err,rows,fields)=>{
+        try{
+          if(err){
+            console.log(err)
+          }
+        }catch(err){
+          console.log(err);
+        }
+      })
+    }
+
+    
+    app.get('/api/chat',(req,res)=>{
+      let sql = 'SELECT A.* , B.ProfileImage,B.NickName FROM chat A LEFT JOIN login B ON A.userID = B.userID'
+      connection.query(sql,(err,rows,fields)=>{
+        try{
+          if(err){
+            console.log(err)
+          }
+          else{
+            console.log(rows)
+            res.send(rows);
+          }
+        }catch(err){
+          console.log(err)
+        }
+      })
+    })

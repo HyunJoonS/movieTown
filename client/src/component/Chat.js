@@ -6,7 +6,7 @@ import { useEffect,memo } from "react";
 import './Chat.scss'
 import axios from 'axios';
 import { useSelector } from "react-redux";
-const Chat = ({socket}) => {
+const Chat = ({socket,log}) => {
     let [visible,setVisible] = useState('off-chatting');
     let [message,setMessage] = useState();
     let [chatLog,setChatLog] = useState([]);
@@ -26,11 +26,11 @@ const Chat = ({socket}) => {
             if (message != '') {
                 socket.emit('every', message);
                 let messageObj = {
-                    id: '',
-                    nickname: 'ME',
-                    profileImage: 'ME',
+                    id: loginState[0].userID,
+                    nickname: loginState[0].NickName,
+                    profileImage: loginState[0].ProfileImage,
                     message: message,
-                    type : 'ME',
+                    type : 'chat',
                 }
                 setChatLog(chatLog => [...chatLog, messageObj]);
                 setMessage('');
@@ -41,13 +41,17 @@ const Chat = ({socket}) => {
         }         
     }
     const socketon = ()=>{
+        socket.on('db',(msg)=>{
+            console.log('db목록:',msg)
+        })
         socket.on('every',(msg)=>{  
-            console.log('받은메세지',msg);        ;           
+            console.log('받은메세지',msg);          
             setChatLog(chatLog=>[...chatLog,msg]);
         })
     }
 
-    useEffect(()=>{
+    useEffect(()=>{  
+        setChatLog(log);
         socketon();
     },[])
 
@@ -65,8 +69,8 @@ const Chat = ({socket}) => {
                             setVisible('off-chatting');
                          }}>{exitbtn}</span>
                     </div>
-                        {chatLog.length>0?
-                            <Chatbox chatLog={chatLog}></Chatbox>
+                        {chatLog.length>0 && loginState != undefined?
+                            <Chatbox chatLog={chatLog} loginState={loginState}></Chatbox>
                         :null
                         }
                         
@@ -92,7 +96,7 @@ const Chat = ({socket}) => {
     )
 
   }
-function Chatbox({chatLog}){
+function Chatbox({chatLog,loginState}){
     const mainChatBoxRef =useRef();
     const scrollToBottom = () => {
         if (mainChatBoxRef.current) {
@@ -101,28 +105,30 @@ function Chatbox({chatLog}){
       };
       useEffect(()=>{        
         scrollToBottom();
-      },[chatLog])
+      },[chatLog])    
       return(
         <div className="mainChatBox" ref={mainChatBoxRef}>
-            <ul className="ChatBox-ul">
-                
+            <ul className="ChatBox-ul">                
                 {chatLog!==undefined?chatLog.map((msg) => {               
-                    switch(msg.type){
-                        case 'ME':
-                            return(<My_Message msg={msg}></My_Message>)
+                       switch(msg.type){
                         case 'chat':
-                            return(<Your_Message msg={msg}></Your_Message>)
+                            if(loginState.length>0 && loginState[0].userID==msg.id){
+                                return(<My_Message msg={msg}></My_Message>)
+                            }
+                            else{
+                                return(<Your_Message msg={msg}></Your_Message>)
+                            }
                         case 'system':
                             return(<Sys_Message msg={msg}></Sys_Message>)
+                        default:
+                            return(<></>);
                     }
                 }):null}
             </ul>
         </div>
     )
-      if(chatLog !==undefined){
-        
-      }
 }
+
 let Sys_Message = memo(({msg})=> {
     const noimage = '/img/noimage.jpg'
     return (
@@ -133,7 +139,6 @@ let Sys_Message = memo(({msg})=> {
         </>
     )
 })
-
 
 let Your_Message = memo(({msg})=> {
     const noimage = '/img/noimage.jpg'
