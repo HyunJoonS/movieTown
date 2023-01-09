@@ -7,6 +7,11 @@
 <img src="https://img.shields.io/badge/MySQL-4479A1?style=flat-square&logo=MySQL&logoColor=white"/>
 </div>
 
+<img src="https://img.shields.io/badge/personal project-yellow?style=flat-square&logo=Java&logoColor=white"/>
+
+영화마당
+---
+
 #### Daum 영화 사이트를 참고하여 만든 사이트입니다. 
 영화에 대한 정보를 제공하며 사람들과 소통할 수 있는 커뮤니티 사이트입니다.
 
@@ -30,9 +35,10 @@
 [view](http://movietown.cafe24app.com/board/movie)
 
 
+<br/>
 
-
-
+기능
+---
 
 - **TMDB API**를 이용한 영화 정보 제공
     - 영화, 영화인 검색 및 평가 기능
