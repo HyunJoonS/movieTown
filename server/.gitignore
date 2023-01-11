@@ -18,6 +18,7 @@ config.json
 # production
 /build
 /client
+/public/uploads/
 
 # misc
 .DS_Store
