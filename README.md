@@ -32,7 +32,7 @@
   </tr>
 </table>
 
-[view](http://movietown.cafe24app.com/board/movie)
+[view](http://movietown.hyunjoon.co.kr/)
 
 
 <br/>
