@@ -31,9 +31,29 @@ function BoardView(params) {
         )           
     }
 
+    function 게시물삭제하기({userID}){
+        const delete_board = ()=>{
+            let YESorNO = window.confirm('정말로 게시물을 삭제 하시겠습니까?');
+            if(YESorNO){
+                axios.delete('/api/board/delete/'+params.state[params.index].boardID).then((res)=>{
+                    alert('게시물이 삭제 되었습니다.');
+                    pageEvent('목록');
+                })
+            }
+        }
+        return (
+            <>{
+                userID == params.state[params.index].writerID?
+                <span className='skyblue_btn' onClick={delete_board}>삭제하기</span>
+                :null
+            }
+            </>
+        )           
+    }
     function pageEvent(page) {
         if (page == '이전') {
-            if (params.state.length - params.index > 0) {
+            console.log(params.index)
+            if (params.state.length - params.index -1 > 0) {
                 let id = params.state[params.index + 1].boardID;
                 history.push('./' + id); window.scrollTo(0, 0);
             }
@@ -49,6 +69,12 @@ function BoardView(params) {
             else {
                 alert('다음 게시글이 없습니다.');
             }
+        }
+        else if (page == '목록'){
+            history.push({
+                pathname: '../' + params.type,
+                state: location.state
+            })
         }
     }
 
@@ -68,17 +94,15 @@ function BoardView(params) {
                 <div className="button">
                     <div className='btn_right'>
                         {loginState.length>0?
-                        <게시물수정하기 userID={loginState[0].userID}></게시물수정하기>
+                        <>
+                            <게시물수정하기 userID={loginState[0].userID}></게시물수정하기>
+                            <게시물삭제하기 userID={loginState[0].userID}></게시물삭제하기>
+                        </>
                         :null
                         }
                         <span onClick={() => { pageEvent('이전') }}>이전글</span>
                         <span onClick={() => { pageEvent('다음') }}>다음글</span>
-                        <span onClick={() => {
-                            history.push({
-                                pathname: '../' + params.type,
-                                state: location.state
-                            })
-                        }}>목록</span>
+                        <span onClick={() => { pageEvent('목록') }}>목록</span>
                     </div>
                 </div>
                 <div className="post_wrap">

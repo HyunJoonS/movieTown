@@ -81,7 +81,7 @@ function ListStyle(params) {
                     </tr>
                 </thead>
                 <tbody>
-                    {params.hideNotice==false && params.type!='notice'?
+                    {params && params.hideNotice==false && params.type!='notice'?
                         params.notice.map((data) => {
                             return (
                                 <tr className="notice" onClick={() => {
