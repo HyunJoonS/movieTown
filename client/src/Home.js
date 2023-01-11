@@ -186,9 +186,11 @@ function Home() {
                                 <p>예고편 보기</p>
                             </div>
                             <div className='volume'>
-                                <i onClick={() => {
-                                    setPlayerState({ ...playerState, muted: !playerState.muted })
-                                }}>{playerState.muted ? btnVolumeMute : btnVolumeOn}{playerState.muted}</i>
+                                <div>
+                                    <i onClick={() => {
+                                        setPlayerState({ ...playerState, muted: !playerState.muted })
+                                    }}>{playerState.muted ? btnVolumeMute : btnVolumeOn}{playerState.muted}</i>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -221,12 +223,18 @@ function Home() {
                                 }
                             </ul>
                         </div>
-                        <i className="slide slide-left" style={slide.page == 0 ? { display: 'none' } : null} onClick={() => {
-                            Slide({ type: 'left' });
-                        }}>{btnSlideLeft}</i>
-                        <i className="slide slide-right" style={slide.page == slide.maxpage ? { display: 'none' } : null} onClick={() => {
-                            Slide({ type: 'right' });
-                        }}>{btnSlideRight}</i>
+                        <div>
+                            <i className="slide slide-left" style={slide.page == 0 ? { display: 'none' } : null} onClick={() => {
+                                Slide({ type: 'left' });
+                            }}>{btnSlideLeft}
+                            </i>
+                        </div>
+                        <div>
+                            <i className="slide slide-right" style={slide.page == slide.maxpage ? { display: 'none' } : null} onClick={() => {
+                                Slide({ type: 'right' });
+                            }}>{btnSlideRight}
+                            </i>
+                        </div>
                     </div>
 
                 </div>

@@ -31,6 +31,13 @@ import { useEffect, useState } from 'react';
 import {useDispatch} from 'react-redux'
 
 function App() {
+
+  if (process.env.NODE_ENV === "production") {
+    console.log = function no_console() {};
+    console.warn = function no_console() {};
+  }
+
+  
   let dispatch = useDispatch();
   useEffect(()=>{
 

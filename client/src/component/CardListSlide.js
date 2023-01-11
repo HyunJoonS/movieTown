@@ -74,12 +74,16 @@ function CardListSlide(props) {
                     }
                 </ul>
             </div>
+            <div>
             <i className="slide slide-left" style={slide.page == 0 ? { display: 'none' } : null} onClick={() => {
                 Slide({ type: 'left' });
             }}>{btnSlideLeft}</i>
+            </div>
+            <div>
             <i className="slide slide-right" style={slide.page == slide.maxpage ? { display: 'none' } : null} onClick={() => {
                 Slide({ type: 'right' });
             }}>{btnSlideRight}</i>
+            </div>
         </div>
         </div>
     )

@@ -22,8 +22,11 @@ function Review_view(props){
         getreview().then((resolve)=>{
             setViewReviews(resolve);
             console.log('log',resolve);
-        })             
+        })    
     },[])
+
+
+    
 
     function 등록(){
         let body = {
@@ -36,6 +39,13 @@ function Review_view(props){
             axios.post(props.dburl,body).then((response)=>{
                 alert(response.data);
                 console.log(response);
+
+            getreview().then((resolve)=>{
+                setViewReviews(resolve);
+                console.log('log',resolve);
+            })
+
+
             })
         }
         else{

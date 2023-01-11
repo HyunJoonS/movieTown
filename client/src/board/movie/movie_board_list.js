@@ -52,7 +52,8 @@ function Movie_board_list(params) {
     useEffect(()=>{
         axios.get(`/api/bbs/notice`).then((res)=>{
             setNotice(res.data);
-        }) 
+            console.log("게시물리스트",res.data);
+        }).catch((err)=>console.log(err)) ;
     },[])
     return (
         <div className='movie_board_list'>
