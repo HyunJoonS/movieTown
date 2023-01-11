@@ -1,15 +1,13 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-
 import socketio from 'socket.io-client'
 import Chat from './Chat';
-
 
 const Chatting = ()=>{
     const [currentSocket,setCurrentSocket] = useState();
     const [chatLog,setChatLog] = useState();
     useEffect(()=>{
-        setCurrentSocket(socketio('http://localhost:5000',{transports:["websocket"]}));     
+        setCurrentSocket(socketio('http://movietown.hyunjoon.co.kr',{transports:["websocket"]}));     
         axios.get('/api/chat').then((res)=>{
 
           let array = [];

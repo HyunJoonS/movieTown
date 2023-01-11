@@ -119,7 +119,7 @@ router.get('/popular',(요청,응답)=>{
 // 영화,TV 상세정보 가져오기 
 //https://api.themoviedb.org/3/tv/88329?api_key=f7ae756dc0995d6bb41b186d8912a119&language=ko-KR&append_to_response=videos,watch/providers,credits,release_dates
 router.get('/detail/:movieOrTV/:id',(요청,응답)=>{
-    console.log('실행')
+    // console.log('실행')
     const option = {
         uri: `https://api.themoviedb.org/3/${요청.params.movieOrTV}/${요청.params.id}`,
         qs:  {            

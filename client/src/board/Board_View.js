@@ -110,6 +110,7 @@ function BoardView(params) {
                     <h4>{params.state[params.index].boardTitle}</h4>
                     <div className='writer'>
                         <div className='profileImg'>
+                             <img src={params.state[params.index].ProfileImage ? params.state[params.index].ProfileImage : null}></img>
                         </div>
                         <div className="userinfo">
                             <div className="userNames">

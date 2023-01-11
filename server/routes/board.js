@@ -14,7 +14,21 @@ function 로그인체크(요청,응답,next){
     }
 }
 
-
+router.delete('/board/delete/:id',(req,res)=>{
+    let boardID=req.params.id;
+    let sql = `DELETE FROM board WHERE boardID = ${boardID}`;
+    connection.query(sql,(err,rows,filds)=>{
+        try{
+            if(err){
+                console.log(err);
+            }else{
+                res.send(rows);
+            }
+        }catch(err){
+            console.log(err);
+        }
+    })
+})
 
 router.get('/bbs/notice/',(req,res)=>{
     let sql = `SELECT A.boardID,C.NickName,A.boardTitle,A.boardText,A.writerID,A.boardType,A.read_Count,DATE_FORMAT(A.createDate,'%Y.%m.%d. %H:%i') AS createDate, IFNULL(comments,0) AS comments
@@ -79,6 +93,7 @@ router.post('/board/updqte',로그인체크,(req,res)=>{
 
 //게시판 목록 글 불러오기
 router.post('/board/list/:id',(req,res)=>{
+
     let page = req.body.page
     let sql = `SELECT boardID,boardTitle,boardText,writerID,boardType,read_Count,DATE_FORMAT(createDate,'%Y.%m.%d. %H:%i') AS createDate FROM board WHERE boardType = ? ORDER BY boardID desc`    
     let params =[
@@ -100,6 +115,8 @@ router.post('/board/list/:id',(req,res)=>{
 
 //게시판 목록 글 불러오기
 router.get('/board/list/:id',(req,res)=>{
+    console.log("요청들어옴");
+
     // let boardType=req.params.id;
     let boardType=req.params.id;
     let page = req.query.page;
@@ -236,10 +253,10 @@ router.post('/board/comments',로그인체크,(req,res)=>{
 
     switch (req.body.action) {
         case '댓글':
-            values=`(${bbsID}, ${userID}, '${text}', NOW(), ${myid}, ${myid}, 0, 0)`            
+            values=`(${bbsID}, '${userID}', '${text}', NOW(), ${myid}, ${myid}, 0, 0)`            
             break;
         case '대댓글':
-            values=`(${bbsID}, ${userID}, '${text}', NOW(), ${groupID}, ${parent}, ${depth}, ${seq})`   
+            values=`(${bbsID}, '${userID}', '${text}', NOW(), ${groupID}, ${parent}, ${depth}, ${seq})`   
             break;
     }      
 
