@@ -1,22 +1,21 @@
-const passport = require('passport')
 require('dotenv').config();
+const passport   = require('passport')
+const conf       = require('../config.js');
 var {connection} = require('../dbconnection');
-
 
 //스토리지
 const LocalStrategy = require('passport-local').Strategy;
 const GoogleStrategy = require( 'passport-google-oauth2' ).Strategy;
 const FacebookStrategy = require('passport-facebook').Strategy;
+const { json } = require('express');
 //셋팅
-
-
 
 //페이스북 api ID, Secret 정보 저장 (구글 개발자 웹 내 앱ID, 시크릿 입력)
 passport.use(new FacebookStrategy(
     {
-        clientID      : process.env.FACEBOOK_CLIENT_ID,
-        clientSecret  : process.env.FACEBOOK_CLIENT_SECRET,
-        callbackURL   : 'http://localhost:3000/api/auth/facebook/callback',
+        clientID      : conf.FACEBOOK_CLIENT_ID,
+        clientSecret  : conf.FACEBOOK_CLIENT_SECRET,
+        callbackURL   : '/api/auth/facebook/callback',
         passReqToCallback   : true,
         profileFields: ['email','id', 'displayName','first_name', 'gender', 'last_name', 'picture','profileUrl']
     }, function(request, accessToken, refreshToken, profile, done) {
@@ -41,9 +40,9 @@ passport.use(new FacebookStrategy(
 //구글 api ID, Secret 정보 저장 (구글 개발자 웹 내 앱ID, 시크릿 입력)
 passport.use(new GoogleStrategy(
 {
-    clientID      : process.env.GOOGLE_CLIENT_ID,
-    clientSecret  : process.env.GOOGLE_CLIENT_SECRET,
-    callbackURL   : 'http://localhost:3000/api/auth/google/callback',
+    clientID      : conf.GOOGLE_CLIENT_ID,
+    clientSecret  : conf.GOOGLE_CLIENT_SECRET,
+    callbackURL   : '/api/auth/google/callback',
     passReqToCallback   : true,
 }, function(request, accessToken, refreshToken, profile, done) {
         console.log(profile,profile.displayName,profile.picture,profile.email,profile.id)
@@ -76,17 +75,19 @@ passport.use(new LocalStrategy({
         userID,        
     ]
     connection.query(sql,params,(err,rows,fields)=>{
-        if(err) return done(err);
+        if(err){ console.log(err); return done(err);}
         else if(rows.length > 0){     
             if(rows[0].userPW === userPW){
                 console.log(rows[0].userID);
                 return done(null, rows[0].userID, {message:'로그인 성공'});
             }   
             else{
+                console.log("비밀번호 불일치");
                 return done(null, false, {message:'비밀번호 불일치'});
             }
         }
         else{
+            console.log("아이디가 없습니다.");
             return done(null, false, {message:'아이디가 없습니다.'});
         }
     })
@@ -94,19 +95,20 @@ passport.use(new LocalStrategy({
 
 
 const DB_RegisterID = (id,displayName,Picture,email,provider)=>{
-    let sql = 'INSERT INTO login VALUE (?,null,?,now(),?,?,?)'
+    let sql = 'INSERT INTO login VALUE (?,null,?,now(),?,?,?,?)'
     let params=[
         id,
         displayName,
         Picture,
         email,
-        provider
+        provider,
+        'user'
     ]
     connection.query(sql,params,
         (err,rows,fields)=>{
             try{
                 if (err){
-                    console.log('가입실패');  
+                    console.log('가입실패',err);  
                     return false;
                 }
                 else{

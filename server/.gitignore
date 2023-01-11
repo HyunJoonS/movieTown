@@ -3,7 +3,7 @@
 #dotenv
 .env
 .env.test
-
+config.json
 #database
 /database.json
 
@@ -17,6 +17,7 @@
 
 # production
 /build
+/client
 
 # misc
 .DS_Store

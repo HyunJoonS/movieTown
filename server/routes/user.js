@@ -1,15 +1,24 @@
-var router     = require('express').Router();
-const e        = require('connect-flash');
-var passport   = require('../config/passport');
+const router    = require('express').Router();
+const e         = require('connect-flash');
+const passport  = require('../config/passport');
+const multer    = require('multer');
+const sharp     = require('sharp');
+const fs        = require('fs');
+const path      = require('path');
+const conf      = require('../config.js');
+const NickName  = require('../RandomNickname')
+const upload    = multer({ dest: path.join(__dirname, '../public/uploads')})
 const {connection} = require('../dbconnection');
-const multer   = require('multer');
-const sharp    = require('sharp');
-const fs       = require('fs');
 
-
-const upload = multer({ dest: 'public/uploads'})
 router.get('/fail',(req,res)=>{
-    res.send(req.flash().error[0]);
+    
+    
+    let message = req.flash().error[0];
+    console.log(message);
+    if(message==="Missing credentials"){
+        message= "아이디 비밀번호를 확인해 주세요.";
+    }
+    res.send(message);
 })
 
 router.get('/logout',(req,res)=>{
@@ -28,7 +37,7 @@ router.get('/login',로그인체크,(req,res)=>{
 
 //로그인
 router.post('/login',passport.authenticate('local',{
-    failureRedirect:'/fail',
+    failureRedirect:'/api/fail',
     failureFlash : true
 }),(req,res)=>{
     console.log('loginPost',req.user)
@@ -53,7 +62,7 @@ router.post('/user/update/profileimage',로그인체크,upload.single('profileim
       }catch(err){
           console.log(err)
     }
-    let profileName = `http://localhost:5000/image/${req.file.filename}`;
+    let profileName = `${conf.SERVER}/image/${req.file.filename}`;
     let sql = `UPDATE login SET ProfileImage = ? WHERE userID = ?`
     let params=[
         profileName,
@@ -102,9 +111,9 @@ router.post('/user/update/nickname',로그인체크,(req,res)=>{
 
 // Register
 router.post('/register', async(req, res) => {   
-
-    let sql = 'INSERT INTO login VALUE (?,?,?,now(),null)'
+    let sql = 'INSERT INTO login (userID,userPW,NickName,createDateTime,ProfileImage)VALUE (?,?,?,now(),null)'
     let RandomNickname = NickName();
+    console.log(RandomNickname);
     let params = [
         req.body.userID,
         req.body.userPW,
@@ -117,6 +126,7 @@ router.post('/register', async(req, res) => {
                 try{
     
                     if (err){
+                        console.log(err);
                         res.send('서버 에러');
                     }
                     else{
@@ -166,7 +176,7 @@ function 로그인체크(요청,응답,next){
         next();
     }
     else{
-        console.log('로그인안함');
+        // console.log('로그인안함');
         return 응답.status(401).send({message : '로그인을 해주세요'});
     }
 }

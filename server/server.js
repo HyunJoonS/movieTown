@@ -1,41 +1,42 @@
 //패키지
+require("dotenv").config();
 const express    = require('express');
 const multer     = require('multer');
-const request    = require('request')
 const path       = require('path');
+const conf       = require('./config.js');
 const cors       = require('cors')
 const flash      = require('connect-flash');
 var session      = require('express-session')
+
 const {sessionStore, connection}   = require('./dbconnection')
-const NickName   = require('./RandomNickname')
 const passport   = require('passport');
 
 //moment timezone
 const datetime = require('./datatime')
-
-
+const PORT = conf.PORT;
+const location = conf.SERVER;
 const app = express();
+
 app.use(cors());
 const server = require("http").createServer(app);
 const io = require('socket.io')(server)
-server.listen(5000,()=>{
-  console.log('listen 5000')
+
+server.listen(PORT,()=>{
+  console.log(`listen ${PORT}`)
 })
-
-
 
 //미들웨어 사용
 app.use(express.urlencoded({extended: false})) 
 app.use(express.json());
-app.use('/image',express.static('./public/uploads')); // 정적 파일 위치 설정
+app.use('/image',express.static(path.join(__dirname,'/public/uploads'))); // 정적 파일 위치 설정
 app.use(flash());
 
 var sessionMiddleware = session({
   // store : sessionStore,
   secret: 'changeit', //세션 생성시 필요한 비밀번호 아무거나 작성해도됨
   resave: false,
-  saveUninitialized: false,
-  store: sessionStore,
+  saveUninitialized: false
+  // store: sessionStore,
 })
 //passport setting
 app.use(sessionMiddleware)
@@ -47,6 +48,8 @@ app.use('/api', require('./routes/tmdbapi') );
 app.use('/api', require('./routes/review') );
 app.use('/api', require('./routes/board') );
 app.use('/api', require('./routes/user') );
+//build된 리액트 파일 열기
+app.use(express.static(path.join(__dirname, '/client/build')))
 
 
 // multer 설정
@@ -54,7 +57,7 @@ const upload = multer({
 storage: multer.diskStorage({
     // 저장할 장소
     destination(req, file, cb) {
-    cb(null, 'public/uploads');
+    cb(null, path.join(__dirname, '/public/uploads'));
     },
     // 저장할 이미지의 파일명
     filename(req, file, cb) {
@@ -65,7 +68,7 @@ storage: multer.diskStorage({
     cb(null, path.basename(file.originalname, ext) + Date.now() + ext);
     },
 }),
-// limits: { fileSize: 5 * 1024 * 1024 } // 파일 크기 제한
+ limits: { fileSize: 5 * 1024 * 1024 } // 파일 크기 제한
 });
 
 
@@ -77,7 +80,7 @@ app.post('/img', upload.single('img'), (req, res) => {
     console.log('저장된 파일의 이름', req.file.filename);
 
     // 파일이 저장된 경로를 클라이언트에게 반환해준다.
-    const IMG_URL = `http://localhost:5000/uploads/${req.file.filename}`;
+    const IMG_URL = `${location}/uploads/${req.file.filename}`;
     console.log(IMG_URL);
     res.json({ url: IMG_URL });
 });
@@ -169,7 +172,7 @@ app.get("/api/debug", (req, res) => {
             console.log(err)
           }
           else{
-            console.log(rows)
+            // console.log(rows)
             res.send(rows);
           }
         }catch(err){
@@ -177,3 +180,8 @@ app.get("/api/debug", (req, res) => {
         }
       })
     })
+
+
+    app.get("*", function (req, res) {
+      res.sendFile(path.join(__dirname, "/client/build","index.html"));
+    });

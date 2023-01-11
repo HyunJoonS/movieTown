@@ -1,4 +1,3 @@
-import { set } from "date-fns/esm";
 import React from "react";
 import { useHistory } from "react-router-dom";
 import './Movie.scss'
