@@ -40,6 +40,9 @@ function Login() {
             axios.post('/api/register',body).then((response)=>{
                 console.log(response.data);
                 alert(response.data);
+                if(response.data == '가입 성공'){
+                    history.push('/');
+                }
             });
         }
         else if( !!userPW && !!userPWok && userPW != userPWok){
