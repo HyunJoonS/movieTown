@@ -35,6 +35,7 @@ $size-window-height:50px;
 }
 @mixin systemChat{
     .sysChat{
+        margin-top: 30px;
         text-align: center;
         .text{
             border-radius: 10px;

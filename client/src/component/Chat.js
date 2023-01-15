@@ -134,7 +134,7 @@ let Sys_Message = memo(({msg})=> {
     return (
         <>
             <li className="sysChat">
-                <span className='text'>{'현준님이 입장하셨습니다.'}</span>
+                <span className='text'>{msg.nickname+"님이 입장하셨습니다."}</span>
             </li>
         </>
     )
