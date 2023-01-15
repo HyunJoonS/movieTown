@@ -43,6 +43,9 @@ $skybluebtn : rgb(66, 133, 244);
         overflow: hidden;
         border: 1px solid $solidColor;
         margin-right: 10px;
+        img{
+            width: 100%;
+        }
     }
     .post_wrap{
         padding: 30px;

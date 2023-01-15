@@ -110,7 +110,7 @@ function BoardView(params) {
                     <h4>{params.state[params.index].boardTitle}</h4>
                     <div className='writer'>
                         <div className='profileImg'>
-                             <img src={params.state[params.index].ProfileImage ? params.state[params.index].ProfileImage : null}></img>
+                             <img src={params.state[params.index].profileImage ? params.state[params.index].profileImage : null}></img>
                         </div>
                         <div className="userinfo">
                             <div className="userNames">
@@ -129,7 +129,7 @@ function BoardView(params) {
                     </div>
                     <div className='user_post_more'>
                         <div className='profileImg'>
-                            <img src="11" alt="" />
+                            <img src={params.state[params.index].profileImage ? params.state[params.index].profileImage : null}></img>
                         </div>
                         <div className="userNames" onClick={() => {
                             alert('기능 미구현');
@@ -160,7 +160,7 @@ function BoardView(params) {
                                         <>                                     
                                         <li style={data.depth>0?{paddingLeft:`50px`}:{}} >                                            
                                             <div className='profileImg'>
-                                                <img src="11" alt="" />
+                                                <img src={data.ProfileImage ? data.ProfileImage : null}></img>
                                             </div>
                                             <div className='textbox'>
                                                 <div className="userNames">

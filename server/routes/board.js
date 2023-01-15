@@ -219,8 +219,8 @@ router.get('/board/:id',(req,res)=>{
 //이전, 다음 게시물 목록 가져오기
 router.get('/board/limit/:id',(req,res)=>{
     let sql = 
-    `(SELECT boardID,B.NickName,boardTitle,boardText,writerID,boardType,read_Count,DATE_FORMAT(createDate,'%Y.%m.%d. %H:%i') AS createDate FROM board A LEFT JOIN login B ON A.writerID = B.userID WHERE boardID<=${req.params.id} AND boardType=(SELECT boardType FROM board WHERE boardID=${req.params.id}) order BY boardID desc LIMIT 3) UNION
-    (SELECT boardID,B.NickName,boardTitle,boardText,writerID,boardType,read_Count,DATE_FORMAT(createDate,'%Y.%m.%d. %H:%i') AS createDate FROM board A LEFT JOIN login B ON A.writerID = B.userID WHERE boardID>=${req.params.id} AND boardType=(SELECT boardType FROM board WHERE boardID=${req.params.id}) order by boardID ASC  LIMIT 3) ORDER BY boardID DESC`
+    `(SELECT boardID,B.NickName,B.profileImage,boardTitle,boardText,writerID,boardType,read_Count,DATE_FORMAT(createDate,'%Y.%m.%d. %H:%i') AS createDate FROM board A LEFT JOIN login B ON A.writerID = B.userID WHERE boardID<=${req.params.id} AND boardType=(SELECT boardType FROM board WHERE boardID=${req.params.id}) order BY boardID desc LIMIT 3) UNION
+    (SELECT boardID,B.NickName,B.profileImage,boardTitle,boardText,writerID,boardType,read_Count,DATE_FORMAT(createDate,'%Y.%m.%d. %H:%i') AS createDate FROM board A LEFT JOIN login B ON A.writerID = B.userID WHERE boardID>=${req.params.id} AND boardType=(SELECT boardType FROM board WHERE boardID=${req.params.id}) order by boardID ASC  LIMIT 3) ORDER BY boardID DESC`
 
     connection.query(sql,(err,rows,fields)=>{
         try{
@@ -296,7 +296,7 @@ router.get('/board/comments/:id',(req,res)=>{
         UNION
         SELECT A.id, A.boardID, A.userID, A.commentText, A.createDate, A.groupID ,A.parent, A.depth, A.seq, B.lv+1,CONCAT(B.h,('-'),A.id) FROM board_comment A INNER JOIN CteDept B ON A.parent = B.id WHERE A.parent != A.id
     )
-    SELECT id, boardID, A.userID, ifnull(B.NickName,'이름없음') AS NickName, commentText, DATE_FORMAT(createDate,'%Y.%m.%d. %H:%i') AS createDate, groupID ,parent, depth, seq FROM CteDept A LEFT JOIN login B ON A.userID = B.userID ${order};`
+    SELECT id, boardID, A.userID, B.ProfileImage, ifnull(B.NickName,'이름없음') AS NickName, commentText, DATE_FORMAT(createDate,'%Y.%m.%d. %H:%i') AS createDate, groupID ,parent, depth, seq FROM CteDept A LEFT JOIN login B ON A.userID = B.userID ${order};`
     let params =[
         req.params.id,        
     ]
