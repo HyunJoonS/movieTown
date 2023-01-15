@@ -60,7 +60,7 @@ function Movie_board_list(params) {
             <div className="wrap">
                 <NavbarSub hover={'community'} page={`${path.type}-board`} ></NavbarSub>
                 <h4>{board_title.title}</h4>
-                {state?
+                {state&& notice&& path&& value&& setValue?
                 <Board_List 
                     notice={notice}
                     state={state} 
